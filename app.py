@@ -69,14 +69,14 @@ def preprocess_dataset(csv_data, task_type):
 
     # Create a preprocessing pipeline for numeric features (imputation + scaling)
     numeric_transformer = Pipeline(steps=[
-        ('imputer', SimpleImputer(strategy='mean')),
-        ('scaler', StandardScaler())
+        ('imputer', SimpleImputer(strategy='mean')),  # Impute missing numeric values with mean
+        ('scaler', StandardScaler())                 # Scale numeric features
     ])
 
     # Create a preprocessing pipeline for categorical features (imputation + encoding)
     categorical_transformer = Pipeline(steps=[
-        ('imputer', SimpleImputer(strategy='most_frequent')),
-        ('onehot', OneHotEncoder(handle_unknown='ignore'))
+        ('imputer', SimpleImputer(strategy='most_frequent')),  # Impute missing categorical values with the most frequent value
+        ('onehot', OneHotEncoder(handle_unknown='ignore'))     # One-hot encode categorical features
     ])
 
     # Combine numeric and categorical transformations into a column transformer
@@ -87,8 +87,12 @@ def preprocess_dataset(csv_data, task_type):
         ]
     )
 
-    # Apply the transformations to X
+    # Apply the transformations to X (features)
     X_transformed = preprocessor.fit_transform(X)
+
+    # Handle missing values in the target column (y)
+    y_imputer = SimpleImputer(strategy='most_frequent' if task_type == 'classification' else 'mean')
+    y = y_imputer.fit_transform(y.values.reshape(-1, 1)).ravel()
 
     # If it's a classification task, label encode the target variable
     if task_type == 'classification':
@@ -99,6 +103,7 @@ def preprocess_dataset(csv_data, task_type):
     X_train, X_test, y_train, y_test = train_test_split(X_transformed, y, test_size=0.2, random_state=42)
 
     return X_train, X_test, y_train, y_test, preprocessor, X.columns.tolist()
+
 
 # Function to train models and select the best one with hyperparameter tuning
 def train_models(X_train, y_train, X_test, y_test, task_type):
