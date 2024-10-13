@@ -25,7 +25,7 @@ genai.configure(api_key="AIzaSyDoR10wPWSnCCLXHZWWrlrAg7XCXFzzpx8")  # Replace wi
 # Function to generate dataset based on a text prompt using Google Generative AI
 def generate_dataset_from_text(text):
     model = genai.GenerativeModel(model_name="gemini-1.5-flash")
-    response = model.generate_content(["Generate a dataset in CSV format based on the following text without explanation, just data and I want 200 rows and 5 columns .if you dont have data dont leave it blank put there as NaN also strictly don't give ```csv ``` or '''  ''' with dataset :", text])
+    response = model.generate_content(["Generate a dataset in CSV format based on the following text without explanation, just data and I want exact 200 rows and 5 columns .if you dont have data dont leave it blank put there as NaN also strictly don't give ```csv ``` or '''  ''' with dataset :", text])
     return response.text
 
 # Function to write requirements to requirements.txt
