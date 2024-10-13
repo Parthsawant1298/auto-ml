@@ -201,8 +201,7 @@ if st.sidebar.button("Generate Project"):
             if not csv_data.strip():  # Check if csv_data is empty or only whitespace
                 st.error("Generated CSV data is empty.")
             else:
-                st.subheader("Raw Generated Data:")
-                st.text(csv_data)
+                
                 # Convert raw data to DataFrame for display and further processing
                 try:
                     st.subheader("Generated Dataset:")
