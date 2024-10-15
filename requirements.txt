@@ -1,4 +1,8 @@
-pandas
-scikit-learn
+pickle5
 streamlit
-google-generativeai
+google-generative-ai
+pandas
+matplotlib
+seaborn
+scikit-learn
+kaggle
